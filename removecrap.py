@@ -164,6 +164,10 @@ apps_to_remove = [
 ]
 
 files_to_remove = [
+	"/usr/share/applications/kali*",
+	"/usr/share/applications/sqlitebrowser.desktop.disabled-by-kali-menu",
+	"/usr/share/applications/sqlitebrowser.destkop",
+	"/usr/share/applications/exploit-database.desktop",
 	"/usr/share/applications/kali-pth-smbget.desktop",
 	"/usr/share/applications/kali-pth-curl.desktop",
 	"/usr/share/applications/kali-pth-net.desktop",
@@ -317,116 +321,3 @@ except subprocess.CalledProcessError:
     print("Autoremove failed.")
 except Exception as e:
     print(f"An error occurred during autoremove: {str(e)}")
-
-# Time to install gnome:
-#sudo apt-get update
-#sudo apt install gnome -y (Gives popups, will find way to automate)
-#sudo update-alternatives --config x-session-manager
-
-def download_image(url, path):
-    try:
-        urllib.request.urlretrieve(url, path)
-        print(f"Image downloaded to {path}")
-        return path
-    except Exception as e:
-        raise RuntimeError(f"Error downloading image: {str(e)}") from e
-
-def find_xfce_property():
-    try:
-        user = os.environ.get("USER")
-        dbus_address_cmd = f'cat /proc/$(pgrep -u {user} xfce4-session)/environ | tr "\\0" "\\n" | grep DBUS_SESSION_BUS_ADDRESS | cut -d= -f2-'
-        dbus_address = subprocess.check_output(["/bin/bash", "-c", dbus_address_cmd]).strip().decode("utf-8")
-        os.environ["DBUS_SESSION_BUS_ADDRESS"] = dbus_address
-        
-        properties = subprocess.check_output(["xfconf-query", "-c", "xfce4-desktop", "-l"]).decode("utf-8").split("\n")
-        
-        for prop in properties:
-            if "last-image" in prop:
-                return prop
-        raise ValueError("No suitable property path found.")
-    except Exception as e:
-        raise RuntimeError(f"Error finding XFCE property: {str(e)}") from e
-
-def set_xfce_wallpaper(image_path):
-    try:
-        property_path = find_xfce_property()
-        subprocess.run(["xfconf-query", "-c", "xfce4-desktop", "-p", property_path, "-s", f"{image_path}"], check=True)
-        print(f"XFCE: Wallpaper changed to {image_path}")
-    except Exception as e:
-        print(f"XFCE: Failed to set wallpaper. Error: {str(e)}")
-
-def file_uri(file_path):
-    return "file://" + quote(file_path)
-
-def set_gnome_wallpaper(image_path):
-    try:
-        print(f"GNOME: Changing wallpaper to {image_path}")
-        subprocess.run(["gsettings", "set", "org.gnome.desktop.background", "picture-uri", file_uri(image_path)], check=True)
-        print(f"GNOME: Wallpaper changed to {image_path}")
-    except subprocess.CalledProcessError as e:
-        print(f"GNOME: Failed to set wallpaper. Error: {str(e)}")
-
-def change_wallpaper(image_path):
-    try:
-        if not os.path.exists(image_path):
-            print(f"No image found at {image_path}")
-            return
-        
-        image_path = os.path.abspath(image_path)
-
-        desktop_env = os.environ.get("XDG_CURRENT_DESKTOP", "").lower()
-        if "gnome" in desktop_env:
-            set_gnome_wallpaper(image_path)
-        elif "xfce" in desktop_env:
-            set_xfce_wallpaper(image_path)
-        else:
-            print("Unsupported desktop environment")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
-# Replace with the desired URL and download path
-image_url = "https://pbs.twimg.com/media/EYUgEFkWsAE-Tkg?format=jpg&name=4096x4096"
-download_path = "wallpaper.jpg"
-
-image_path = download_image(image_url, download_path)
-change_wallpaper(image_path)
-
-# Customizations:
-#https://extensions.gnome.org/extension/906/sound-output-device-chooser
-#https://extensions.gnome.org/extension/104/netspeed
-#https://extensions.gnome.org/extension/4679/burn-my-windows/
-#Search extensions and click settings for Burn my windows, choose the animation you want.
-
-#Dracula icons
-# wget https://github.com/dracula/gtk/files/5214870/Dracula.zip
-# unzip https://github.com/dracula/gtk/files/5214870/Dracula.zip
-# mv Dracula /usr/share/icons/
-
-#Install Discord
-#wget "https://dl.discordapp.net/apps/linux/0.0.31/discord-0.0.31.deb"
-#sudo dpkg -i discord-0.0.31.deb
-
-#Install Brave Browser
-#sudo apt install curl
-#sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-#echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#sudo apt update
-#sudo apt install brave-browser
-#unpin firefox
-#pin bravebrowser
-#sudo apt-get install gedit
-#xdg-mime default org.gnome.gedit.desktop text/plain
-
-# Move utilities to a folder in gnome:
-# - Bulk Rename, Calendar, Clocks, Videos, Calculator, Document Scanner, Help, Clipboard Manager, Engrampa Archive, Gparted, Extensions, Input Method, LightDM GTK+, MATE Calculator, Kali Tweaks, Music, Parole Media Player, PulseAudio, Qt5 Settings, Ryhtmbox, Ristretto Image, Shotwell, Shotwell Profile, Sound Recorder, TeXdoctk, Time and Date
-
-# Organize applications left
-# gsettings set org.gnome.shell app-picker-layout "[]"
-
-#TO DO:
-# sudo apt-get install nautilus
-# Install visual studio code
-# Install/get httpx (Default it to all checks excluding ASN)
-# Install wpscan (Default it to --enumerate u,vp,vt
-# Install dirsearch (custom commands for long execution such as $dirsearchlong $dirsearchshort
-# neofetch/screenfetch + customized motd
