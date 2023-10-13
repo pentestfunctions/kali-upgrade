@@ -1,38 +1,45 @@
 # kali-upgrade
 
-Don't run this garbage, just resetting my windows so threw it on here in the mean time. 
+## Introduction
+This repository contains scripts and guidelines to upgrade and customize your Kali Linux setup. Please note: This was initially created as a backup while resetting Windows, so ensure you understand each step before executing.
 
-First run the removecrap.py file
+## Steps to Follow:
 
-Then you will want to install gnome
-# Time to install gnome:
+### 1. Clean Up:
+Execute the `removecrap.py` file to remove unnecessary files or settings.
+
+### 2. Install GNOME Desktop Environment:
 ```sh
 sudo apt-get update
-sudo apt install gnome -y (Gives popups, will find way to automate)
+sudo apt install gnome -y # Note: This might show pop-ups, automation for this is in progress
 sudo update-alternatives --config x-session-manager
 ```
 
-- Restart your system after
+Restart your system after the above steps.
 
-- Then you will want to run the backgroundchanger.py file
+### 3. Customize Desktop:
+Run the `backgroundchanger.py` file to change the desktop background.
 
-After this install these customizations
-https://extensions.gnome.org/extension/906/sound-output-device-chooser
-https://extensions.gnome.org/extension/104/netspeed
-https://extensions.gnome.org/extension/4679/burn-my-windows/
-https://extensions.gnome.org/extension/3628/arcmenu/
-Disable gnome system menu
-In Dash to Panel Disable Show Applications Button
+#### GNOME Extensions:
+Install the following GNOME extensions for enhanced functionality:
+- [Sound Output Device Chooser](https://extensions.gnome.org/extension/906/sound-output-device-chooser)
+- [Netspeed](https://extensions.gnome.org/extension/104/netspeed)
+- [Burn My Windows](https://extensions.gnome.org/extension/4679/burn-my-windows/)
+- [ArcMenu](https://extensions.gnome.org/extension/3628/arcmenu/)
 
-Search extensions in your machine and click settings for Burn my windows, choose the animation you want.
+After installing, disable the GNOME system menu. In Dash to Panel, disable the "Show Applications" button.
 
-Install discord
+For "Burn My Windows" extension, search extensions on your machine, click settings, and choose the desired animation.
+
+### 4. Install Applications:
+
+#### Discord:
 ```sh
 wget "https://dl.discordapp.net/apps/linux/0.0.31/discord-0.0.31.deb"
 sudo dpkg -i discord-0.0.31.deb
 ```
 
-Install Brave Browser
+#### Brave Browser:
 ```sh
 sudo apt install curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -40,25 +47,28 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] http
 sudo apt update
 sudo apt install brave-browser
 ```
-unpin firefox
-pin bravebrowser to dash
 
-Install gedit
+After installation, unpin Firefox and pin Brave browser to the dash.
+
+#### Gedit:
 ```sh
 sudo apt-get install gedit
 xdg-mime default org.gnome.gedit.desktop text/plain
 ```
-Add nautilus
+
+#### Nautilus:
 ```sh
 sudo apt-get install nautilus
 ```
-Install visual studio code
-https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+
+
+#### Visual Studio Code:
+Download the `.deb` file for Visual Studio Code from [here](https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64). After downloading, run:
 ```sh
 sudo dpkg -i "code_*"
 ```
 
-Suru icons
+#### Suru Icons:
 ```sh
 sudo apt-get install meson
 wget https://github.com/snwh/suru-icon-theme.git
@@ -68,12 +78,14 @@ sudo ninja -C "build" install
 gsettings set org.gnome.desktop.interface icon-theme "Suru"
 ```
 
+#### Konsole:
 ```sh
 sudo apt-get install konsole
 ```
-pin to dash menu - remove terminal
+After installation, pin Konsole to the dash menu and remove the terminal.
 
-Change profile picture
+### 5. Update Profile Picture:
 ```sh
 sudo nano /var/lib/AccountsService/users/kali
 ```
+
