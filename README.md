@@ -26,7 +26,8 @@ Install the following GNOME extensions for enhanced functionality:
 - [Netspeed](https://extensions.gnome.org/extension/104/netspeed)
 - [Burn My Windows](https://extensions.gnome.org/extension/4679/burn-my-windows/)
 - [ArcMenu](https://extensions.gnome.org/extension/3628/arcmenu/)
-
+- [DashToPanel](https://extensions.gnome.org/extension/1160/dash-to-panel/)
+- 
 After installing, disable the GNOME system menu. In Dash to Panel, disable the "Show Applications" button.
 
 For "Burn My Windows" extension, search extensions on your machine, click settings, and choose the desired animation.
