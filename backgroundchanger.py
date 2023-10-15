@@ -1,3 +1,10 @@
+import subprocess
+import sys
+import os
+import glob
+import urllib.request
+from urllib.parse import quote
+
 def download_image(url, path):
     try:
         urllib.request.urlretrieve(url, path)
