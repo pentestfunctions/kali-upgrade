@@ -72,7 +72,7 @@ sudo dpkg -i "code_*"
 #### Suru Icons:
 ```sh
 sudo apt-get install meson
-wget https://github.com/snwh/suru-icon-theme.git
+git clone https://github.com/snwh/suru-icon-theme.git
 cd suru-icon-theme
 meson "build" --prefix=/usr
 sudo ninja -C "build" install
