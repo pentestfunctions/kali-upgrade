@@ -1,7 +1,7 @@
 # kali-upgrade 🛠️
 
 <p align="center">
-  <img src="./static/upgradegirl.png" alt="Kali Upgrade Temp Girl Mascot">
+  <img src="./static/kaliupgrade.png" alt="Kali Upgrade Temp Girl Mascot">
 </p>
 
 ## Introduction 📖
